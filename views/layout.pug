@@ -1,0 +1,14 @@
+doctype html
+html
+  head
+    title #{title}
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script
+      include ../public/javascripts/index.js
+  body
+    div.container
+      include header.pug
+      .wrapper
+          block content
+      include footer.pug
+  

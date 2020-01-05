@@ -1,0 +1,21 @@
+.header
+  .header-menu
+    .dropdown
+      button.btn.btn-info.dropdown-toggle(
+      id="category-selector"
+      type="button"
+      data-toggle="dropdown"
+      aria-haspopup="true"
+      aria-expanded="false"
+      )
+        ='Categories'
+      .dropdown-menu(aria-labelledby="category-selector")
+        a.dropdown-item(href='/cars') Cars
+        a.dropdown-item(href='/toys') Toys
+        a.dropdown-item(href='/plants') Plants
+  .header-center
+    ='Logo'
+  .header-user_part
+    ='login'
+    ='avatar'
+

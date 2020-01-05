@@ -1,0 +1,31 @@
+{
+  "name": "bulletin-board",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "watch": "webpack --watch"
+  },
+  "author": "inc1981",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "bootstrap": "^4.4.1",
+    "express": "^4.17.1",
+    "jquery": "^3.4.1",
+    "node-sass": "^4.13.0",
+    "node-sass-middleware": "^0.11.0",
+    "popper.js": "^1.16.0",
+    "pug": "^2.0.4"
+  },
+  "devDependencies": {
+    "css-loader": "^3.4.1",
+    "nodemon": "^1.19.4",
+    "style-loader": "^1.1.2",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
+  }
+}
