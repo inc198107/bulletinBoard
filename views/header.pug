@@ -1,21 +1,27 @@
-.header
-  .header-menu
-    .dropdown
-      button.btn.btn-info.dropdown-toggle(
-      id="category-selector"
-      type="button"
-      data-toggle="dropdown"
-      aria-haspopup="true"
-      aria-expanded="false"
+.header#fixed-header
+  .header__left-part
+    a.logo.navbar-brand(href='/')
+      ='Bulletin Board'
+    if !autorised 
+      span.d-inline-block(
+        tabindex='0',
+        data-toggle='tooltip',
+        title='If You want to create bulletin, please login or register',
+        placement='auto'
       )
-        ='Categories'
-      .dropdown-menu(aria-labelledby="category-selector")
-        a.dropdown-item(href='/cars') Cars
-        a.dropdown-item(href='/toys') Toys
-        a.dropdown-item(href='/plants') Plants
-  .header-center
-    ='Logo'
-  .header-user_part
-    ='login'
-    ='avatar'
-
+        button.btn.btn-sm.btn-info.disabled#add-bulletin-btn(type='button', aria-disabled="true")
+          ='Add Bulletin'
+    else
+      button.btn.btn-sm.btn-primary#add-bulletin-btn(type='button', aria-disabled="false")
+        ='Add Bulletin'
+  .header__right-part
+    if autorised
+      a.nav-link.header__right-part-user-link(href=`/${user.email}`)
+        =`${user.email}`
+      button.btn.btn-sm.btn-danger#log-out-btn(type='button')
+        ='Log Out'
+    else
+      button.btn.btn-sm.btn-primary#sign-in-btn.sign(type='button')
+        ='Sign In'
+      button.btn.btn-sm.btn-danger#sign-up-btn.sign(type='button')
+        ='Sign Up'

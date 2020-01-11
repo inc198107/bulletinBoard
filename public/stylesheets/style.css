@@ -2,26 +2,58 @@
   margin: 0;
   padding: 0; }
 
-.header {
+.container {
+  position: relative; }
+
+.main-content {
+  width: 100%;
   display: flex;
-  border: 1px solid red;
+  min-height: calc(100vh - 180px); }
+
+.header {
+  width: 100%;
+  height: 80px;
+  display: flex;
   flex-direction: row;
+  background-color: rgba(110, 173, 218, 0.78);
+  justify-content: space-between;
+  padding: 0 16px; }
+  .header .header__left-part {
+    display: flex;
+    flex-direction: row;
+    align-items: center; }
+    .header .header__left-part .logo {
+      color: #ffffff;
+      font-size: 24px;
+      font-family: 'Seymour One', Arial, Helvetica, sans-serif; }
+    .header .header__left-part #add-bulletin-btn {
+      height: 40px;
+      width: 100px;
+      font-family: 'Anton',Arial, Helvetica, sans-serif;
+      font-size: 16px; }
+  .header .header__right-part {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end; }
+    .header .header__right-part .header__right-part-user-link {
+      color: #ffffff;
+      font-family: 'Oswald',Arial, Helvetica, sans-serif;
+      font-size: 18px; }
+    .header .header__right-part #log-out-btn,
+    .header .header__right-part #sign-in-btn,
+    .header .header__right-part #sign-up-btn {
+      font-family: 'Anton',Arial, Helvetica, sans-serif;
+      font-size: 14px; }
+      .header .header__right-part #log-out-btn.sign,
+      .header .header__right-part #sign-in-btn.sign,
+      .header .header__right-part #sign-up-btn.sign {
+        margin-left: 16px; }
+
+.footer {
   width: 100%;
   height: 100px;
-  justify-content: center; }
-  .header .header-menu, .header .header-user_part {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-basis: 20%; }
-  .header .header-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-basis: 60%; }
-
-.wrapper {
-  width: 100%;
-  min-height: calc(100vh - 200px); }
+  display: flex;
+  border: 1px solid red; }
 
 /*# sourceMappingURL=style.css.map */

@@ -1,0 +1,12 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.container{
+    position: relative;
+}
+.main-content{
+    width: 100%;
+    display: flex;
+    min-height: calc(100vh - 180px);
+}

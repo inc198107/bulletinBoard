@@ -1,11 +1,6 @@
-*{
-    margin: 0;
-    padding: 0;
-}
 
+@import 'variables.scss';
+@import 'base.scss';
 @import 'header.scss';
+@import 'footer.scss';
 
-.wrapper{
-    width:100%;
-    min-height: calc(100vh - 200px);
-}
