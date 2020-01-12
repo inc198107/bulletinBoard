@@ -1,0 +1,30 @@
+.left-bar{
+    flex-basis :200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    box-sizing: border-box;
+    padding-top:24px;
+    border-right: 2px solid $main-border;
+    .left-bar__filter{
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        .left-bar__filter-title{
+            color: $blue-text;
+            padding-left: 16px;
+            height: 30px;
+            vertical-align: middle;
+            font-family: 'Anton',Arial, Helvetica, sans-serif;
+            font-size: 16px;
+            border-bottom: 2px solid $footer-background;
+        }
+        .list-group{
+            a{
+                color: $filter-item-text;
+                font-family: 'Oswald', Arial, Helvetica, sans-serif;
+            }
+        }
+    }
+}

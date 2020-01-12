@@ -1,0 +1,15 @@
+mixin bulletin_card(autor, rating, text, id, image, name)
+  .card.bulletin-card
+    if image
+      img.card-img-top(src= `/${image}`,alt= "image")
+    else
+      img.card-img-top(src="./images/default.gif", alt= "No Image")
+    .card-body
+      h5.card-title
+        =`${name}`
+      h6.card-subtitle.text-muted   
+        =`${autor}`
+      p.card-text
+        =`${text}`
+      a.card-link(href=`/${id}`)
+        =`${id}`

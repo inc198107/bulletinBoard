@@ -1,3 +1,5 @@
 export default $('document').ready(()=>{
-    $('#fixed-header').scrollToFixed();
+    if($('#fixed-header')){
+        $('#fixed-header').scrollToFixed();
+    }
 })

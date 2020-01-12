@@ -1,0 +1,16 @@
+extends layout.pug
+block content
+  aside.left-bar
+    .left-bar__filter#fixed_filters
+      .left-bar__filter-title
+        p
+          ='Categories'
+      .list-group.list-group-flush
+        each category in categories
+          a.list-group-item.list-group-item-action(href=`/${category}`)
+            =`${category}`
+  section.result
+    include ./mixins/_bulletin
+    each item in bulletins
+      +bulletin_card(item.autor.name, item.rating, item.text, item.id, item.image, item.name)
+    
