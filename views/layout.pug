@@ -7,7 +7,9 @@ html
     script
       include ../public/javascripts/bundle.js
   body
-    div.container
+    div.container 
+      include ./mixins/_register_modal
+      +register_modal()
       include header.pug
       main.main-content
         block content

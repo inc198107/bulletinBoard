@@ -1,0 +1,53 @@
+mixin register_modal()
+  .modal.fade#modal__sign-up(tabindex='-1', role='dialog', aria-labeledby='modal__sign-up', aria-hidden='true')
+    .modal-dialog.modal-dialog-centered(role='document')
+      .modal-content
+        .modal-header
+          .modal-title#modal__sign-up-title
+            ='Sign Up'
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true')
+              |&times;
+        .modal-body
+          form#new-user(action='/new_user', method='post')
+            .form-group
+              label(for='new-user-email')
+                ="Email"
+              input.form-control#new-user-email(
+                type='email', 
+                required='required', 
+                name='new-user-email', 
+                placeholder='Enter your email please',
+                aria-describedby='emailHelp'
+                )
+              small#emailHelp.form-text.text-muted
+                ='You should use your email as a login'
+            .form-group
+              label(for='new-user-password')
+                ="Password"
+              input.form-control#new-user-password(
+                type='password', 
+                required='required', 
+                name='new-user-passvord', 
+                placeholder='Enter your passvord please',
+                aria-describedby='passwordHelp'
+                )
+              small#passwordHelp.form-text.text-muted
+                ='Enter password'
+            .form-group
+              label(for='new-user-password')
+                ="Confirm Password"
+              input.form-control#new-user-pswd-confirm(
+                type='password', 
+                required='required', 
+                name='new-user-pswd-confirm', 
+                placeholder='Confirm password please',
+                aria-describedby='pswdconfirmHelp'
+                )
+              small#pswdconfirmHelp.form-text.text-muted
+                ='You must confirm your password'
+        .modal-footer
+          button.btn.btn-secondary(type='button', data-dismiss='modal')
+            ='Cancel'
+          button.btn.btn-primary(type='button')
+            ='Submit'
