@@ -7,9 +7,9 @@ mixin bulletin_card(autor, rating, text, id, image, name)
     .card-body
       h5.card-title
         =`${name}`
-      h6.card-subtitle.text-muted   
+      h7.card-subtitle.text-muted   
         =`${autor}`
       p.card-text
         =`${text}`
       a.card-link(href=`/${id}`)
-        =`${id}`
+        =`ID: ${id}`
