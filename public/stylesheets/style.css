@@ -107,4 +107,8 @@
 .card.bulletin-card {
   width: 250px; }
 
+#modal__create-bulletin .modal-body .media .preview {
+  max-width: 200px;
+  height: auto; }
+
 /*# sourceMappingURL=style.css.map */

@@ -8,8 +8,14 @@ html
       include ../public/javascripts/bundle.js
   body
     div.container 
-      include ./mixins/_register_modal
-      +register_modal()
+      if !autorised
+        include ./mixins/_register_modal
+        include ./mixins/_sign-in_modal
+        +register_modal()
+        +sign-in_modal()
+      if autorised
+        include ./mixins/_add_bulletin_modal
+        +create_bulletin(categories)
       include header.pug
       main.main-content
         block content

@@ -1,0 +1,41 @@
+mixin sign-in_modal()
+  .modal.fade#modal__sign-in(tabindex='-1', role='dialog', aria-labeledby='modal__sign-in', aria-hidden='true')
+    .modal-dialog.modal-dialog-centered(role='document')
+      .modal-content
+        .modal-header
+          .modal-title#modal__sign-in-title
+            ='Sign In'
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true')
+              |&times;
+        .modal-body
+          form#user_log-in(action='/new_user', method='get')
+            .form-group
+              label(for='user-email')
+                ="Email"
+              input.form-control#user-email(
+                type='email', 
+                required='required', 
+                name='user-email', 
+                placeholder='Enter your email please',
+                aria-describedby='email-log-in-help'
+                )
+              small#email-log-in-help.form-text.text-muted
+                ='You should use your email as a login'
+            .form-group
+              label(for='user-password')
+                ="Password"
+              input.form-control#user-password(
+                type='password', 
+                required='required', 
+                name='user-password', 
+                placeholder='Enter your passvord please',
+                aria-describedby='password-log-in-help'
+                )
+              small#password-log-in-help.form-text.text-muted
+                ='Enter password'
+        .modal-footer
+          button.btn.btn-secondary(type='button', data-dismiss='modal')
+            ='Cancel'
+          button.btn.btn-primary(type='button')
+            ='Log in'

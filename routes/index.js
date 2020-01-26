@@ -5,7 +5,7 @@ router.get('/', (req, res, next) => {
     res.render("main_page", { 
         title: 'Test Project',
         categories: ["All","For Kids","Tools","Home","Hobby","Different"],
-        autorised: false,
+        autorised: true,
         user: {email:'test@gmail.com'},
         bulletins: [
             {autor: {name: 'i am'},

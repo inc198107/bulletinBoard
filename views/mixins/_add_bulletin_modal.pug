@@ -1,0 +1,56 @@
+mixin create_bulletin(categories)
+  .modal.fade#modal__create-bulletin(tabindex='-1', role='dialog', aria-labeledby='modal__create-bulletin', aria-hidden='true')
+    .modal-dialog.modal-dialog-centered.modal-lg(role='document')
+      .modal-content
+        .modal-header
+          .modal-title#modal__create-bulletin
+            ='Add your bulletin on board'
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true')
+              |&times;
+        .modal-body
+          .media
+            img.align-self-start.mr-3.preview#preview(src="./images/default.gif", alt='image')
+            .media-body
+              form#new-bulletin(action='/new-bulletin', method='post')
+                .form-group
+                  label(for='category-select')
+                    ='Choose category*'
+                  select.custom-select#category-select(required='required', name='new_bulletin_category')
+                    each category in categories
+                      option(value=category)
+                        =`${category}`
+                .form-group
+                  label(for='new_bulletin_name')
+                    ='Name*'
+                  input.form-control#new_bulletin_name(
+                      type='text',
+                      required='required'
+                      name='new_bulletin_name',
+                      placeholder='Enter Bulletin name',
+                      aria-describedby = 'enter_new_bull_name'
+                    )
+                  small#enter_new_bull_name.form-text.text-muted
+                    ='Enter your bulletin name'
+                .form-group#image-upload
+                  .custom-file
+                    input.custom-file-input#new-bulletin-image(type='file', name='new_bulletin_image')
+                    label.custom-file-label(for='new-bulletin-image')
+                      ='Choose image for your bulletin( jpg, jpg or png)'
+                    .invalid-feedback
+                .form-group
+                  label(for='new_bulletin_text')
+                    ='Yor bulletin text*'
+                  textarea.form-control#new_bulletin_text(
+                      name='new_bulletin_text',
+                      required = 'required',
+                      maxlength = '400',
+                      aria-describedby = 'enter-new-bull-text'
+                    )
+                  small#enter-new-bull-text.form-text.text-muted
+                    ='Enter your bulletin text, maximum 400 characters'
+        .modal-footer
+          button.btn.btn-secondary(type='button', data-dismiss='modal')
+            ='Cancel'
+          button.btn.btn-primary(type='button')
+            ='Add Bulletin on Board'

@@ -5,3 +5,4 @@ import './libs/jquery-scrolltofixed-min';
 import './header';
 import './leftBar';
 import './test';
+import './add_bulletin';
