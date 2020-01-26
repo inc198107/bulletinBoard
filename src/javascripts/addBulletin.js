@@ -10,6 +10,7 @@ export default $('document').ready(() => {
             reader.readAsDataURL(input.files[0]);
         }
     }
+
     const gtFileExtention = (filename) => {
         return /[^.]+$/.exec(filename);
     }
@@ -17,7 +18,6 @@ export default $('document').ready(() => {
     $('#modal__create-bulletin #new-bulletin-image').on('change', function (e) {
         let ext = gtFileExtention(this.value);
         if ((ext[0] === 'jpg') || (ext[0] === 'jpeg') || (ext[0] === 'png')) {
-            console.log(ext[0]);
             readUrl(this)
             $('#image-upload .invalid-feedback').text(' ');
             $('#image-upload .invalid-feedback').hide();
