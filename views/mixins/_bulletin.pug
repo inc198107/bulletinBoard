@@ -1,4 +1,5 @@
 mixin bulletin_card(autor, rating, text, id, image, name)
+  - var rate = rating || 0
   .card.bulletin-card
     if image
       img.card-img-top(src= `/${image}`,alt= "image")
@@ -11,5 +12,16 @@ mixin bulletin_card(autor, rating, text, id, image, name)
         =`${autor}`
       p.card-text
         =`${text}`
-      a.card-link(href=`/${id}`)
-        =`ID: ${id}`
+      a.card-link.link-with-rating(href = '#', data-id=`${id}`, data-autor=`${autor}`)
+        =`Read more...`
+        .rating-container
+          .top-rating
+            = 'Top rating:'
+          - var count = 0
+          .star-inactive-block
+            while count < rate
+              - count ++
+              img.star(src="./images/star.svg", alt="star") 
+      
+    //- include ./mixins/_rating_inactive_vidget
+    //- +rating-star(rate)

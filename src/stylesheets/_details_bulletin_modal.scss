@@ -1,0 +1,62 @@
+#modal__bulletin-detail {
+  .modal-header {
+    font-size: 20px;
+    font-family: "Seymour One", Arial, Helvetica, sans-serif;
+    color: $blue-text;
+  }
+  .modal-body {
+    font-family: "Oswald", Arial, Helvetica, sans-serif;
+    .media {
+      .preview {
+        max-width: 300px;
+        height: auto;
+      }
+      .media-body {
+          h5{
+              color: $bordo-text;
+          }
+        .created-by{
+            color: $filter-item-text;
+            font-size: small;
+        }
+        .bulletin-text-content {
+          margin-top: 8px;
+          border: 1px solid $blue-text;
+          border-radius: 4px;
+          min-height: 100px;
+          width: 100%;
+          text-align: left;
+          box-sizing: border-box;
+          padding: 8px;
+          font-size: 14px;
+          font-weight: lighter;
+          color: $standard-text;
+          font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+        .ratings-block {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            align-items: baseline;
+            justify-content: space-around;
+            .rating-call{
+                font-size: medium;
+                color: $bordo-text;
+            }
+          .rating-active-container {
+            font-family: unset;
+            display: flex;
+            max-width: 150px;
+            margin: 8px 0 8px auto;
+          }
+        }
+      }
+    }
+  }
+  .modal-footer {
+    .btn {
+      font-family: "Anton", Arial, Helvetica, sans-serif;
+      font-size: 14px;
+    }
+  }
+}

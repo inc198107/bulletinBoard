@@ -1,3 +1,13 @@
-.card.bulletin-card{
-   width: 250px;
+.card.bulletin-card {
+  width: 250px;
+  font-family:'Oswald', Arial, Helvetica, sans-serif;
+  .card-text{
+    margin-bottom: 4px;
+  }
+  .link-with-rating {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: space-between;
+  }
 }

@@ -8,6 +8,8 @@ html
       include ../public/javascripts/bundle.js
   body
     div.container 
+      include ./mixins/_details_bulletin_modal
+      +bulletin_details()
       if !autorised
         include ./mixins/_register_modal
         include ./mixins/_sign-in_modal

@@ -14,7 +14,7 @@ router.get('/', (req, res, next) => {
                    sed do eiusmod tempor incididunt ut labore et`,
              id: '12',
              name: 'Test',
-             image: false
+             image: false,
             }
         ]
      })

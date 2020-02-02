@@ -39,6 +39,17 @@ mixin create_bulletin(categories)
                       ='Choose image for your bulletin( jpg, jpg or png)'
                     .invalid-feedback
                 .form-group
+                  label(for='new_bulletin_describe')
+                    ='Yor bulletin short description*'
+                  textarea.form-control#new_bulletin_describe(
+                      name='new_bulletin_describe',
+                      required = 'required',
+                      maxlength = '100',
+                      aria-describedby = 'enter-new-bull-description'
+                    )
+                  small#enter-new-bull-description.form-text.text-muted
+                    ='Enter your bulletin short description, maximum 100 characters'
+                .form-group
                   label(for='new_bulletin_text')
                     ='Yor bulletin text*'
                   textarea.form-control#new_bulletin_text(

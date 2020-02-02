@@ -1,0 +1,28 @@
+.rating-container {
+  margin-top: 8px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $stars-background;
+  border-radius: 4px;
+  padding: 2px;
+  .top-rating {
+    font-size: smaller;
+    color: $bordo-text;
+    padding: 0 8px 0 4px;
+  }
+  .star-inactive-block {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    .star {
+      width: 24px;
+      height: 24px;
+      padding: 4px;
+      object-fit: contain;
+    }
+  }
+}
