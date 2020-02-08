@@ -16,9 +16,9 @@
         ='Add Bulletin'
   .header__right-part
     if autorised
-      a.nav-link.header__right-part-user-link(href=`/${user.email}`)
-        =`${user.email}`
-      button.btn.btn-sm.btn-danger#log-out-btn(type='button')
+      a.nav-link.header__right-part-user-link(href='#')
+        =`${user}`
+      button.btn.btn-sm.btn-danger#log-out-btn(type='button', data-user-mail=`${user}`)
         ='Log Out'
     else
       button.btn.btn-sm.btn-primary#sign-in-btn.sign(type='button', data-toggle='modal', data-target='#modal__sign-in')

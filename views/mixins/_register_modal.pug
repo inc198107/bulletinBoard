@@ -9,14 +9,14 @@ mixin register_modal()
             span(aria-hidden='true')
               |&times;
         .modal-body
-          form#new-user(action='/new_user', method='post')
+          form#new-user(action='/new-user', method='post')
             .form-group
               label(for='new-user-email')
                 ="Email"
               input.form-control#new-user-email(
                 type='email', 
                 required='required', 
-                name='new-user-email', 
+                name='new_user_email', 
                 placeholder='Enter your email please',
                 aria-describedby='emailHelp'
                 )
@@ -28,7 +28,7 @@ mixin register_modal()
               input.form-control#new-user-password(
                 type='password', 
                 required='required', 
-                name='new-user-passvord', 
+                name='new_user_passvord', 
                 placeholder='Enter your passvord please',
                 aria-describedby='passwordHelp'
                 )
@@ -40,7 +40,7 @@ mixin register_modal()
               input.form-control#new-user-pswd-confirm(
                 type='password', 
                 required='required', 
-                name='new-user-pswd-confirm', 
+                name='new_user_pswd_confirm', 
                 placeholder='Confirm password please',
                 aria-describedby='pswd-confirm-help'
                 )
@@ -49,5 +49,5 @@ mixin register_modal()
         .modal-footer
           button.btn.btn-secondary(type='button', data-dismiss='modal')
             ='Cancel'
-          button.btn.btn-primary(type='button')
+          button.btn.btn-primary#register-submit(type='button')
             ='Submit'

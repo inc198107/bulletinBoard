@@ -2,8 +2,15 @@ const express = require("express");
 const path = require('path');
 const sassMiddleware = require('node-sass-middleware');
 const bodyParser = require("body-parser");
-
+const uri = "mongodb+srv://iAm:qwedf1981@cluster0-kgvh0.mongodb.net/test?retryWrites=true&w=majority";
+const mongoose = require('mongoose');
 const app = express();
+
+const connectionDB = () => {
+    mongoose.Promise = require('bluebird');
+    mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+    return mongoose.connection
+}
 
 const index = require('./routes/index');
 
@@ -31,16 +38,24 @@ app.use(function (req, res, next) {
 });
 
 // error handler
-app.use(function(err, req, res, next) {
- // set locals, only providing error in development;
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+app.use(function (err, req, res, next) {
+    // set locals, only providing error in development;
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
 });
 
-app.listen(3030, () => {
-    console.log("started on :3030")
+//database connection and server start
+connectionDB()
+.on('error',console.log)
+.on('disconnected',connectionDB)
+.once('open', () => {
+    console.log('db connected')
+    app.listen(3030, () => {
+        console.log("started on :3030")
+    })
 })
+
