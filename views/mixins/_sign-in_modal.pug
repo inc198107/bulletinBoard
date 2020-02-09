@@ -9,14 +9,14 @@ mixin sign-in_modal()
             span(aria-hidden='true')
               |&times;
         .modal-body
-          form#user_log-in(action='/new_user', method='get')
+          form#user_log-in(action='/user-log-in', method='post')
             .form-group
               label(for='user-email')
                 ="Email"
               input.form-control#user-email(
                 type='email', 
                 required='required', 
-                name='user-email', 
+                name='user_email', 
                 placeholder='Enter your email please',
                 aria-describedby='email-log-in-help'
                 )
@@ -28,7 +28,7 @@ mixin sign-in_modal()
               input.form-control#user-password(
                 type='password', 
                 required='required', 
-                name='user-password', 
+                name='user_password', 
                 placeholder='Enter your passvord please',
                 aria-describedby='password-log-in-help'
                 )
@@ -37,5 +37,5 @@ mixin sign-in_modal()
         .modal-footer
           button.btn.btn-secondary(type='button', data-dismiss='modal')
             ='Cancel'
-          button.btn.btn-primary(type='button')
+          button.btn.btn-primary#log-in-btn(type='button')
             ='Log in'

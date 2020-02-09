@@ -12,7 +12,7 @@ mixin create_bulletin(categories)
           .media
             img.align-self-start.mr-3.preview#preview(src="./images/default.gif", alt='image')
             .media-body
-              form#new-bulletin(action='/new-bulletin', method='post')
+              form#new-bulletin(action='/new-bulletin', method='post', enctype="multipart/form-data")
                 .form-group
                   label(for='category-select')
                     ='Choose category*'
@@ -63,5 +63,5 @@ mixin create_bulletin(categories)
         .modal-footer
           button.btn.btn-secondary(type='button', data-dismiss='modal')
             ='Cancel'
-          button.btn.btn-primary(type='button')
+          button.btn.btn-primary#submit-bulletin(type='button')
             ='Add Bulletin on Board'

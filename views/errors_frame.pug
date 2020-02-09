@@ -1,0 +1,6 @@
+extends layout.pug
+block content
+  .allert.alert-danger.error-block(role="alert")
+    = alertText || 'something went wrong'
+    a.alert-link(href='/')
+      = 'Go to the Main page'

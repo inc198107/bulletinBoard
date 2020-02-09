@@ -28,4 +28,8 @@ export default $('document').ready(() => {
             e.preventDefault();
         }
     })
+
+    $('#modal__create-bulletin').on('click', '#submit-bulletin', function (e) {
+        $('#new-bulletin').submit();
+    })
 }) 

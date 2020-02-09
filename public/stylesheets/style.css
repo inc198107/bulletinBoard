@@ -269,4 +269,17 @@
     content: "\2605";
     color: black; } }
 
+.error-block {
+  width: 80%;
+  height: 160px;
+  margin: 30% auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: "Overpass", Arial, Helvetica, sans-serif;
+  font-size: 18px; }
+  .error-block .alert-link {
+    padding-left: 16px; }
+
 /*# sourceMappingURL=style.css.map */

@@ -8,7 +8,7 @@ const app = express();
 
 const connectionDB = () => {
     mongoose.Promise = require('bluebird');
-    mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+    mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
     return mongoose.connection
 }
 
@@ -50,12 +50,12 @@ app.use(function (err, req, res, next) {
 
 //database connection and server start
 connectionDB()
-.on('error',console.log)
-.on('disconnected',connectionDB)
-.once('open', () => {
-    console.log('db connected')
-    app.listen(3030, () => {
-        console.log("started on :3030")
+    .on('error', console.log)
+    .on('disconnected', connectionDB)
+    .once('open', () => {
+        console.log('db connected')
+        app.listen(3030, () => {
+            console.log("started on :3030")
+        })
     })
-})
 

@@ -7,8 +7,6 @@ export default $('document').ready(() => {
         })
     }
 
-
-
     $('#modal__sign-up').on('click', '#register-submit', function (e) {
         let email = $('#new-user-email').val();
         let pwd = $('#new-user-password').val();
@@ -24,6 +22,25 @@ export default $('document').ready(() => {
             }
             if(pwd !== pwdConf){
                 $('#new-user-password, #new-user-pswd-confirm').addClass('errored');
+            }
+        }
+
+    })
+
+    $('#modal__sign-in').on('click', '#log-in-btn', function (e) {
+        let email = $('#user-email').val();
+        let pwd = $('#user-password').val();
+        if (validateEmail(email) && (pwd)) {
+            $('#user_log-in').submit();
+            $('#user-password, #user-email').removeClass('errored');
+            $('#modal__sign-in').modal("hide");
+        }
+        else{
+            if(!validateEmail(email)){
+                $('#user-email').addClass('errored');
+            }
+            if(!pwd){
+                $('#user-password').addClass('errored');
             }
         }
 

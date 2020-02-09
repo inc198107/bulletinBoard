@@ -12,5 +12,5 @@ block content
   section.result
     include ./mixins/_bulletin
     each item in bulletins
-      +bulletin_card(item.autor.name, item.rating, item.text, item.id, item.image, item.name)
+      +bulletin_card(item.autor, item.rating, item.preview, item.id, item.image, item.name)
     
