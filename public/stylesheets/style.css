@@ -102,22 +102,33 @@
       font-family: 'Oswald', Arial, Helvetica, sans-serif; }
 
 .result {
+  display: flex;
   width: calc(100% - 200px);
   padding: 16px;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between; }
+  justify-content: space-evenly; }
 
-.card.bulletin-card {
-  width: 250px;
-  font-family: 'Oswald', Arial, Helvetica, sans-serif; }
-  .card.bulletin-card .card-text {
-    margin-bottom: 4px; }
-  .card.bulletin-card .link-with-rating {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    justify-content: space-between; }
+.card {
+  height: max-content; }
+  .card.bulletin-card {
+    width: 250px;
+    margin-left: 16px;
+    margin-bottom: 16px;
+    font-family: "Oswald", Arial, Helvetica, sans-serif; }
+    .card.bulletin-card .card-body {
+      min-height: 200px; }
+    .card.bulletin-card .img-container {
+      max-height: 200px;
+      overflow: hidden;
+      object-fit: contain; }
+    .card.bulletin-card .card-text {
+      margin-bottom: 4px; }
+    .card.bulletin-card .link-with-rating {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      justify-content: space-between; }
 
 #modal__create-bulletin .modal-header {
   font-size: 20px;

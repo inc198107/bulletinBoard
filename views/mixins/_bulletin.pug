@@ -1,18 +1,19 @@
-mixin bulletin_card(autor, rating, text, id, image, name)
+mixin bulletin_card(authorMail, rating, text, id, image, name, findId)
   - var rate = rating || 0
   .card.bulletin-card
-    if image
-      img.card-img-top(src= `/${image}`,alt= "image")
-    else
-      img.card-img-top(src="./images/default.gif", alt= "No Image")
+    .img-container
+      if image
+        img.card-img-top(src= `${image}`,alt= "image")
+      else
+        img.card-img-top(src="./images/default.gif", alt= "No Image")
     .card-body
       h5.card-title
         =`${name}`
       h7.card-subtitle.text-muted   
-        =`${autor}`
+        =`${autorMail}`
       p.card-text
         =`${text}`
-      a.card-link.link-with-rating(href = '#', data-id=`${id}`, data-autor=`${autor}`)
+      a.card-link.link-with-rating(href = '#', data-find=`${findId}`, data-id=`${id}`, data-autor=`${autorMail}`)
         =`Read more...`
         .rating-container
           .top-rating

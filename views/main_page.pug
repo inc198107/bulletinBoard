@@ -11,6 +11,6 @@ block content
             =`${category}`
   section.result
     include ./mixins/_bulletin
-    each item in bulletins
-      +bulletin_card(item.autor, item.rating, item.preview, item.id, item.image, item.name)
+    each item in results
+      +bulletin_card(item.authorMail, item.rating, item.preview, item.id, item.image, item.name, item.findId)
     

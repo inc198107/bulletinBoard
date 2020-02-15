@@ -1,7 +1,8 @@
 .result{
+    display: flex;
     width: calc(100% - 200px);
     padding:16px;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }

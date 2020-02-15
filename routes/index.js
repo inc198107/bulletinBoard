@@ -5,15 +5,26 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const router = express.Router();
 const urlEncodedParser = bodyParser.urlencoded({ extended: true });
-var storage = multer.memoryStorage();
-var upload = multer({ storage: storage });
+
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'public/uploads')
+    },
+    filename: function (req, file, cb) {
+        let fileOriginalName = file.originalname.split('.');
+        let origName = fileOriginalName[0];
+        let origExt = fileOriginalName[1]
+        cb(null, `${origName}_${Date.now()}.${origExt}`);
+    }
+})
+
+var upload = multer({ storage: storage })
 
 const User = require('../models/user');
 const Bulletin = require('../models/bulletin');
 
 let userIsAutorised = false;
 let currentUser = ' ';
-
 
 
 const createUser = (email, password) => {
@@ -23,42 +34,94 @@ const createUser = (email, password) => {
     }).save()
 }
 
-const createBulletin = (mail, category, preview, text, id, name, image) => {
+const createBulletin = (mail, category, preview, text, idView, name, imageName, findId) => {
     return new Bulletin({
         authorMail: mail,
         rating: 0,
         category: category,
         preview: preview,
         text: text,
-        id: id,
+        id: idView,
         name: name,
-        image: {
-            name: image.name,
-            contentType: image.contenttype,
-            image: image.buffer
-        }
+        image: `./uploads/${imageName}`,
+        findId: findId
     }).save()
 }
 
+const getBulletinsBy = (category) => {
+    return Bulletin.findBulletinByCategory(category, (error, items) => {
+        if (error) { return console.log(error) }
+        if (items) {
+            let bulletinsArr = [];
+            console.log(items);
+            forEach.items((item) => {
+                bulletinsArr.push({
+                    authorMail: item.authorMail,
+                    rating: item.rating,
+                    category: item.category,
+                    preview: item.preview,
+                    id: item.id,
+                    name: item.name,
+                    image: item.image,
+                    findId: item.findId
+                })
+            })
+            return bulletinsArr
+        }
+    })
+}
+
+const getAllItems = () => {
+    return Bulletin.returnAll((error, items) => {
+        if (error) { return console.log(error) };
+        if (items) {
+            console.log("get all", items);
+            let bulletinsArr = [];
+            items.forEach((item) => {
+                bulletinsArr.push({
+                    authorMail: item.authorMail,
+                    rating: item.rating,
+                    category: item.category,
+                    preview: item.preview,
+                    id: item.id,
+                    name: item.name,
+                    image: item.image,
+                    findId: item.findId
+                })
+            })
+            return bulletinsArr;
+        }
+    });
+}
+
+router.get('/details', (req, res, next) => {
+    console.log(req.query.id);
+    let currForDet = `${req.query.id}`
+    Bulletin.findBulletinBySearch(currForDet, (err, details) => {
+        if (err) { res.sendStatus(402) };
+        if (details) {
+            console.log("det", details);
+            let out = JSON.stringify(details);
+            res.send(out)
+        }
+    })
+
+})
+
 router.post('/new-bulletin', upload.any(), (req, res, next) => {
     if (!req.body) return res.sendStatus(400);
-    let id = Date.now();
-    let image = {
-        name: req.files[0].originalname,
-        contenttype: req.files[0].mimetype,
-        buffer: req.files[0].buffer
-    }
+    let id = `${Date.now()}`;
+    let redId = id.substr(-6, id.length);
     createBulletin(
         currentUser,
         req.body.new_bulletin_category,
         req.body.new_bulletin_describe,
         req.body.new_bulletin_text,
-        id,
+        redId,
         req.body.new_bulletin_name,
-        image
+        `${req.files[0].filename}`,
+        id
     );
-    console.log(req.body);
-    console.log('file', req.files[0]);
     res.redirect('/');
 })
 
@@ -128,25 +191,15 @@ router.get('/logout', (req, res, next) => {
 })
 
 router.get('/', (req, res, next) => {
-    res.render("main_page", {
-        title: 'Bulletin  Test Project',
-        categories: ["All", "For Kids", "Tools", "Home", "Hobby", "Different"],
-        autorised: userIsAutorised,
-        user: currentUser,
-        bulletins: [
-            {
-                autor: "mail",
-                rating: 5,
-                category: 'All',
-                preview: `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                          sed do eiusmod temp`,
-                text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                       sed do eiusmod tempor incididunt ut labore et`,
-                id: '12',
-                name: 'Test',
-                image: false,
-            }
-        ]
+    getAllItems().then((result) => {
+        console.log("this is it", result)
+        res.render("main_page", {
+            title: 'Bulletin  Test Project',
+            categories: ["All", "For Kids", "Tools", "Home", "Hobby", "Different"],
+            autorised: userIsAutorised,
+            user: currentUser,
+            results: result
+        })
     })
 })
 
