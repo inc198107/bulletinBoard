@@ -6,18 +6,23 @@ const BulletinScheme = new Schema({
         type: String,
         required: true,
         unique: false
-      },
-    rating: Number,
+    },
+    ratingCount: Number,
+    votesCount: Number,
     category: String,
     preview: String,
     text: String,
-    id: String, 
+    id: String,
     findId: {
         type: String,
         unique: true,
     },
     name: String,
     image: String,
+},
+{
+    autoCreate: true,
+    autoIndex: true
 })
 
 BulletinScheme.statics.findBulletinByUser = function (email, cb) {
@@ -34,6 +39,10 @@ BulletinScheme.statics.findBulletinBySearch = function (findId, cb) {
 
 BulletinScheme.statics.returnAll = function (cb) {
     return this.find({}, cb)
+}
+
+BulletinScheme.statics.updateRating = function(findId, rating, voted, cb){
+    this.findOneAndUpdate({ findId: findId }, {ratingCount: rating, votesCount: voted }, cb)
 }
 
 const Bulletin = mongoose.model('Bulletin', BulletinScheme);

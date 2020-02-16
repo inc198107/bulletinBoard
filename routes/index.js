@@ -23,10 +23,6 @@ var upload = multer({ storage: storage })
 const User = require('../models/user');
 const Bulletin = require('../models/bulletin');
 
-let userIsAutorised = false;
-let currentUser = ' ';
-
-
 const createUser = (email, password) => {
     return new User({
         email: email,
@@ -37,7 +33,8 @@ const createUser = (email, password) => {
 const createBulletin = (mail, category, preview, text, idView, name, imageName, findId) => {
     return new Bulletin({
         authorMail: mail,
-        rating: 0,
+        ratingCount: 0,
+        votesCount: 0,
         category: category,
         preview: preview,
         text: text,
@@ -51,48 +48,56 @@ const createBulletin = (mail, category, preview, text, idView, name, imageName, 
 const getBulletinsBy = (category) => {
     return Bulletin.findBulletinByCategory(category, (error, items) => {
         if (error) { return console.log(error) }
-        if (items) {
-            let bulletinsArr = [];
-            console.log(items);
-            forEach.items((item) => {
-                bulletinsArr.push({
-                    authorMail: item.authorMail,
-                    rating: item.rating,
-                    category: item.category,
-                    preview: item.preview,
-                    id: item.id,
-                    name: item.name,
-                    image: item.image,
-                    findId: item.findId
-                })
-            })
-            return bulletinsArr
-        }
+        console.log("byCat", items);
     })
 }
 
 const getAllItems = () => {
     return Bulletin.returnAll((error, items) => {
         if (error) { return console.log(error) };
-        if (items) {
-            console.log("get all", items);
-            let bulletinsArr = [];
-            items.forEach((item) => {
-                bulletinsArr.push({
-                    authorMail: item.authorMail,
-                    rating: item.rating,
-                    category: item.category,
-                    preview: item.preview,
-                    id: item.id,
-                    name: item.name,
-                    image: item.image,
-                    findId: item.findId
-                })
-            })
-            return bulletinsArr;
-        }
+        console.log("get all", items);
     });
 }
+
+const cardDecorator = (result) => {
+    let bulletinsArr = [];
+    return bulletinsArr = result.map((item) => {
+        let countedRating = 0;
+        if (item.votesCount > 0) {
+            countedRating = (item.ratingCount / item.votesCount);
+        }
+        return {
+            authorMail: item.authorMail,
+            rating: countedRating,
+            category: item.category,
+            preview: item.preview,
+            id: item.id,
+            name: item.name,
+            image: item.image,
+            findId: item.findId
+        }
+    })
+}
+
+router.get('/details/vote', (req, res, next) => {
+    console.log(req.query);
+    let unitID = `${req.query.id}`;
+    let votedRate = parseInt(req.query.rate);
+    Bulletin.findBulletinBySearch(unitID, (err, item) => {
+        if (err) { console.log(error) };
+        console.log("upd", item);
+    })
+        .then((item) => {
+            let nextVote = item[0].votesCount + 1;
+            let updatedRate = item[0].ratingCount + votedRate;
+            Bulletin.updateRating(unitID, updatedRate, nextVote, (error, item) => {
+                if (error) { res.sendStatus(402); }
+                console.log('modified', item);
+                let out = JSON.stringify([{ currRate: (updatedRate / nextVote) }]);
+                res.send(out)
+            })
+        })
+})
 
 router.get('/details', (req, res, next) => {
     console.log(req.query.id);
@@ -113,7 +118,7 @@ router.post('/new-bulletin', upload.any(), (req, res, next) => {
     let id = `${Date.now()}`;
     let redId = id.substr(-6, id.length);
     createBulletin(
-        currentUser,
+        req.session.mail,
         req.body.new_bulletin_category,
         req.body.new_bulletin_describe,
         req.body.new_bulletin_text,
@@ -132,22 +137,20 @@ router.post('/new-user', urlEncodedParser, (req, res, next) => {
     User.findUserByEmail(userMail, (error, user) => {
         if (user) {
             if (user.password === userPwd) {
-                userIsAutorised = true;
-                currentUser = userMail;
+                req.session.mail = userMail;
+                req.session.autorised = true;
                 res.redirect('/');
             }
             else {
                 res.render("errors_frame", {
-                    autorised: userIsAutorised,
-                    user: currentUser,
                     alertText: 'Email is currently present in database, please try to log In'
                 })
             }
         }
         else {
             createUser(userMail, userPwd);
-            userIsAutorised = true;
-            currentUser = userMail;
+            req.session.mail = userMail;
+            req.session.autorised = true;
             res.redirect('/');
         }
         if (error) { console.log(error) }
@@ -161,22 +164,18 @@ router.post('/user-log-in', urlEncodedParser, (req, res, next) => {
     User.findUserByEmail(userMail, (error, user) => {
         if (user) {
             if (user.password === userPwd) {
-                userIsAutorised = true;
-                currentUser = userMail;
+                req.session.mail = userMail;
+                req.session.autorised = true;
                 res.redirect('/');
             }
             else {
                 res.render("errors_frame", {
-                    autorised: userIsAutorised,
-                    user: currentUser,
                     alertText: 'Password is incorrect, please try again'
                 })
             }
         }
         else {
             res.render("errors_frame", {
-                autorised: userIsAutorised,
-                user: currentUser,
                 alertText: `There is no user with ${userMail} email, please register before try to login `
             })
         }
@@ -185,20 +184,30 @@ router.post('/user-log-in', urlEncodedParser, (req, res, next) => {
 })
 
 router.get('/logout', (req, res, next) => {
-    currentUser = " ";
-    userIsAutorised = false;
-    res.redirect('/');
+    req.session.destroy((err) => {
+        if (err) {
+            return console.log(err);
+        }
+        res.redirect('/');
+    });
 })
 
 router.get('/', (req, res, next) => {
+    let sess = req.session;
+    let user = ' ';
+    let loggedIn = req.session.autorised || false 
+    if ( sess.mail) {
+        user =  sess.mail;
+     }
     getAllItems().then((result) => {
         console.log("this is it", result)
+        const out = cardDecorator(result);
         res.render("main_page", {
             title: 'Bulletin  Test Project',
             categories: ["All", "For Kids", "Tools", "Home", "Hobby", "Different"],
-            autorised: userIsAutorised,
-            user: currentUser,
-            results: result
+            autorised: loggedIn,
+            user: user,
+            results: out
         })
     })
 })

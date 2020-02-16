@@ -10,7 +10,7 @@ mixin bulletin_card(authorMail, rating, text, id, image, name, findId)
       h5.card-title
         =`${name}`
       h7.card-subtitle.text-muted   
-        =`${autorMail}`
+        =`${authorMail}`
       p.card-text
         =`${text}`
       a.card-link.link-with-rating(href = '#', data-find=`${findId}`, data-id=`${id}`, data-autor=`${autorMail}`)
