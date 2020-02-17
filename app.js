@@ -9,6 +9,8 @@ const uri = "mongodb+srv://iAm:qwedf1981@cluster0-kgvh0.mongodb.net/test?retryWr
 const mongoose = require('mongoose');
 const app = express();
 
+var PORT = process.env.port || 3030;
+
 const connectionDB = () => {
     mongoose.Promise = require('bluebird');
     mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
@@ -68,8 +70,8 @@ connectionDB()
     .on('disconnected', connectionDB)
     .once('open', () => {
         console.log('db connected')
-        app.listen(3030, () => {
-            console.log("started on :3030")
+        app.listen(PORT, () => {
+            console.log(`started on ${PORT}`)
         })
     })
 
