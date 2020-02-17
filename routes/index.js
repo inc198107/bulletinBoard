@@ -94,6 +94,7 @@ router.get('/details', (req, res, next) => {
 
 router.post('/new-bulletin', upload.any(), (req, res, next) => {
     if (!req.body) return res.sendStatus(400);
+    console.log("create");
     let id = `${Date.now()}`;
     let redId = id.substr(-6, id.length);
     createBulletin(
