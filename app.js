@@ -9,7 +9,7 @@ const uri = "mongodb+srv://iAm:qwedf1981@cluster0-kgvh0.mongodb.net/test?retryWr
 const mongoose = require('mongoose');
 const app = express();
 
-const port = process.env.port || 3030;
+const port = process.env.PORT || 3030;
 
 const connectionDB = () => {
     mongoose.Promise = require('bluebird');
