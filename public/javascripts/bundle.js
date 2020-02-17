@@ -232,7 +232,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* WEBPACK VAR INJECTION */(f
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* WEBPACK VAR INJECTION */(function($) {/* harmony default export */ __webpack_exports__[\"default\"] = ($('document').ready(()=>{\r\n    let fixGap = $('.header').height();\r\n    if($('#fixed_filters')){\r\n        $('#fixed_filters').scrollToFixed({marginTop:fixGap + 24});\r\n    }\r\n}));\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ \"./node_modules/jquery/dist/jquery.js\")))\n\n//# sourceURL=webpack:///./src/javascripts/leftBar.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* WEBPACK VAR INJECTION */(function($) {/* harmony default export */ __webpack_exports__[\"default\"] = ($('document').ready(() => {\r\n    let fixGap = $('.header').height();\r\n    if ($('#fixed_filters').length > 0) {\r\n        $('#fixed_filters').scrollToFixed({ marginTop: fixGap + 24 });\r\n    }\r\n    let location = window.location.href.split('/');\r\n    let loc = location[location.length - 1].replace(\"-\", '')\r\n    let links = $('.list-group.list-group-flush a');\r\n    links.each(function (elem) {\r\n        let val = $(this).text().toLowerCase().replace(\" \", '');\r\n        if (val === 'all') {\r\n            val = ''\r\n        }\r\n        if (val === loc) {\r\n            $(this).addClass('active');\r\n        }\r\n    })\r\n}));\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ \"./node_modules/jquery/dist/jquery.js\")))\n\n//# sourceURL=webpack:///./src/javascripts/leftBar.js?");
 
 /***/ }),
 

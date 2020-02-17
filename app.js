@@ -23,6 +23,7 @@ app.set('view engine', 'pug');
 app.use(express.json());
 
 app.use(cookieParser());
+
 app.use(session({
     secret: 'myBulletinSecret',
     saveUninitialized: false,

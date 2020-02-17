@@ -3,12 +3,13 @@
   height: 160px;
   margin: 30% auto;
   display: flex;
+  border-radius: 10px;
   align-items: center;
   justify-content: center;
   text-align: center;
   font-family: "Overpass", Arial, Helvetica, sans-serif;
   font-size: 18px;
-  .alert-link {
-    padding-left: 16px;
+  .btn.btn-primary {
+    margin-left: 16px;
   }
 }

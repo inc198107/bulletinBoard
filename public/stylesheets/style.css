@@ -100,6 +100,8 @@
     .left-bar .left-bar__filter .list-group a {
       color: #00aaff;
       font-family: 'Oswald', Arial, Helvetica, sans-serif; }
+      .left-bar .left-bar__filter .list-group a.active {
+        color: #ffffff; }
 
 .result {
   display: flex;
@@ -285,12 +287,13 @@
   height: 160px;
   margin: 30% auto;
   display: flex;
+  border-radius: 10px;
   align-items: center;
   justify-content: center;
   text-align: center;
   font-family: "Overpass", Arial, Helvetica, sans-serif;
   font-size: 18px; }
-  .error-block .alert-link {
-    padding-left: 16px; }
+  .error-block .btn.btn-primary {
+    margin-left: 16px; }
 
 /*# sourceMappingURL=style.css.map */

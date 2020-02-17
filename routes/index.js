@@ -6,6 +6,8 @@ const mongoose = require('mongoose');
 const router = express.Router();
 const urlEncodedParser = bodyParser.urlencoded({ extended: true });
 
+const cardDecorator = require('../decorators/cardDcorator');
+
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'public/uploads')
@@ -59,40 +61,18 @@ const getAllItems = () => {
     });
 }
 
-const cardDecorator = (result) => {
-    let bulletinsArr = [];
-    return bulletinsArr = result.map((item) => {
-        let countedRating = 0;
-        if (item.votesCount > 0) {
-            countedRating = (item.ratingCount / item.votesCount);
-        }
-        return {
-            authorMail: item.authorMail,
-            rating: countedRating,
-            category: item.category,
-            preview: item.preview,
-            id: item.id,
-            name: item.name,
-            image: item.image,
-            findId: item.findId
-        }
-    })
-}
-
 router.get('/details/vote', (req, res, next) => {
     console.log(req.query);
     let unitID = `${req.query.id}`;
     let votedRate = parseInt(req.query.rate);
     Bulletin.findBulletinBySearch(unitID, (err, item) => {
         if (err) { console.log(error) };
-        console.log("upd", item);
     })
         .then((item) => {
             let nextVote = item[0].votesCount + 1;
             let updatedRate = item[0].ratingCount + votedRate;
             Bulletin.updateRating(unitID, updatedRate, nextVote, (error, item) => {
                 if (error) { res.sendStatus(402); }
-                console.log('modified', item);
                 let out = JSON.stringify([{ currRate: (updatedRate / nextVote) }]);
                 res.send(out)
             })
@@ -105,7 +85,6 @@ router.get('/details', (req, res, next) => {
     Bulletin.findBulletinBySearch(currForDet, (err, details) => {
         if (err) { res.sendStatus(402) };
         if (details) {
-            console.log("det", details);
             let out = JSON.stringify(details);
             res.send(out)
         }
@@ -192,13 +171,152 @@ router.get('/logout', (req, res, next) => {
     });
 })
 
+router.get('/all', (req, res, next) => {
+    res.redirect('/');
+})
+
+router.get('/for-kids', (req, res, next) => {
+    let sess = req.session;
+    let user = ' ';
+    let loggedIn = req.session.autorised || false
+    if (sess.mail) {
+        user = sess.mail;
+    }
+    getBulletinsBy('For Kids').then((result) => {
+        console.log("this is it", result)
+        if (result.length > 0) {
+            const out = cardDecorator(result);
+            res.render("main_page", {
+                title: 'Bulletin  Test Project',
+                categories: ["All", "For Kids", "Tools", "Home", "Hobby", "Different"],
+                autorised: loggedIn,
+                user: user,
+                results: out
+            })
+        }
+        else {
+            res.render("errors_frame", {
+                alertText: 'no any bulletin in such category'
+            })
+        }
+    })
+})
+
+router.get('/tools', (req, res, next) => {
+    let sess = req.session;
+    let user = ' ';
+    let loggedIn = req.session.autorised || false
+    if (sess.mail) {
+        user = sess.mail;
+    }
+    getBulletinsBy('Tools').then((result) => {
+        console.log("this is it", result)
+        if (result.length > 0) {
+            const out = cardDecorator(result);
+            res.render("main_page", {
+                title: 'Bulletin  Test Project',
+                categories: ["All", "For Kids", "Tools", "Home", "Hobby", "Different"],
+                autorised: loggedIn,
+                user: user,
+                results: out
+            })
+        }
+        else {
+            res.render("errors_frame", {
+                alertText: 'no any bulletin in such category'
+            })
+        }
+    })
+})
+
+router.get('/home', (req, res, next) => {
+    let sess = req.session;
+    let user = ' ';
+    let loggedIn = req.session.autorised || false
+    if (sess.mail) {
+        user = sess.mail;
+    }
+    getBulletinsBy('Home').then((result) => {
+        console.log("this is it", result)
+        if (result.length > 0) {
+            const out = cardDecorator(result);
+            res.render("main_page", {
+                title: 'Bulletin  Test Project',
+                categories: ["All", "For Kids", "Tools", "Home", "Hobby", "Different"],
+                autorised: loggedIn,
+                user: user,
+                results: out
+            })
+        }
+        else {
+            res.render("errors_frame", {
+                alertText: 'no any bulletins in such category'
+            })
+        }
+    })
+})
+
+router.get('/hobby', (req, res, next) => {
+    let sess = req.session;
+    let user = ' ';
+    let loggedIn = req.session.autorised || false
+    if (sess.mail) {
+        user = sess.mail;
+    }
+    getBulletinsBy('Hobby').then((result) => {
+        console.log("this is it", result)
+        if (result.length > 0) {
+            const out = cardDecorator(result);
+            res.render("main_page", {
+                title: 'Bulletin  Test Project',
+                categories: ["All", "For Kids", "Tools", "Home", "Hobby", "Different"],
+                autorised: loggedIn,
+                user: user,
+                results: out
+            })
+        }
+        else {
+            res.render("errors_frame", {
+                alertText: 'No any bulletins in such category'
+            })
+        }
+    })
+})
+
+router.get('/different', (req, res, next) => {
+    let sess = req.session;
+    let user = ' ';
+    let loggedIn = req.session.autorised || false
+    if (sess.mail) {
+        user = sess.mail;
+    }
+    getBulletinsBy('Different').then((result) => {
+        console.log("this is it", result)
+        if (result.length > 0) {
+            const out = cardDecorator(result);
+            res.render("main_page", {
+                title: 'Bulletin  Test Project',
+                categories: ["All", "For Kids", "Tools", "Home", "Hobby", "Different"],
+                autorised: loggedIn,
+                user: user,
+                results: out
+            })
+        }
+        else {
+            res.render("errors_frame", {
+                alertText: 'No any bulletins in such category'
+            })
+        }
+    })
+})
+
 router.get('/', (req, res, next) => {
     let sess = req.session;
     let user = ' ';
-    let loggedIn = req.session.autorised || false 
-    if ( sess.mail) {
-        user =  sess.mail;
-     }
+    let loggedIn = req.session.autorised || false
+    if (sess.mail) {
+        user = sess.mail;
+    }
     getAllItems().then((result) => {
         console.log("this is it", result)
         const out = cardDecorator(result);

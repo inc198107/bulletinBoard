@@ -24,6 +24,9 @@
             a{
                 color: $filter-item-text;
                 font-family: 'Oswald', Arial, Helvetica, sans-serif;
+                &.active{
+                    color: $white;
+                }
             }
         }
     }

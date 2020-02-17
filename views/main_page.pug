@@ -7,7 +7,7 @@ block content
           ='Categories'
       .list-group.list-group-flush
         each category in categories
-          a.list-group-item.list-group-item-action(href=`/${category}`)
+          a.list-group-item.list-group-item-action(href=`/${category}`.replace(" ","-").toLowerCase())
             =`${category}`
   section.result
     include ./mixins/_bulletin
