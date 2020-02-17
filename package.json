@@ -4,6 +4,7 @@
   "description": "forJPR",
   "main": "app.js",
   "scripts": {
+    "postinstall": "npm run build",
     "start": " node app.js",
     "dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
