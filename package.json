@@ -1,10 +1,7 @@
 {
   "name": "bulletin-board",
   "version": "1.0.0",
-  "description": "foJPR",
-  "engines": {
-    "node": "12.11.1"
-  },
+  "description": "forJPR",
   "main": "app.js",
   "scripts": {
     "start": " node app.js",

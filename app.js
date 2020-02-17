@@ -9,7 +9,7 @@ const uri = "mongodb+srv://iAm:qwedf1981@cluster0-kgvh0.mongodb.net/test?retryWr
 const mongoose = require('mongoose');
 const app = express();
 
-var PORT = process.env.port || 3030;
+const port = process.env.port || 3030;
 
 const connectionDB = () => {
     mongoose.Promise = require('bluebird');
@@ -70,8 +70,8 @@ connectionDB()
     .on('disconnected', connectionDB)
     .once('open', () => {
         console.log('db connected')
-        app.listen(PORT,"0.0.0.0", () => {
-            console.log(`started on ${PORT}`)
+        app.listen(port,"0.0.0.0", () => {
+            console.log(`started on ${port}`)
         })
     })
 
