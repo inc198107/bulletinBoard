@@ -70,7 +70,7 @@ connectionDB()
     .on('disconnected', connectionDB)
     .once('open', () => {
         console.log('db connected')
-        app.listen(PORT, () => {
+        app.listen(PORT,"0.0.0.0", () => {
             console.log(`started on ${PORT}`)
         })
     })
