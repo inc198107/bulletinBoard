@@ -1,2 +1,4 @@
 node_modules/
-# git add
+public/uploads/*.jpg
+public/uploads/*.jpeg
+public/uploads/*.png
