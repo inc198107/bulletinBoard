@@ -45,5 +45,9 @@ BulletinScheme.statics.updateRating = function(findId, rating, voted, cb){
     this.findOneAndUpdate({ findId: findId }, {ratingCount: rating, votesCount: voted }, cb)
 }
 
+BulletinScheme.statics.deleteBulletin = function(findId, cb){
+    return this.deleteOne({ findId: findId }, cb)
+}
+
 const Bulletin = mongoose.model('Bulletin', BulletinScheme);
 module.exports = Bulletin;

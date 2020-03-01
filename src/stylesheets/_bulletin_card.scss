@@ -23,5 +23,24 @@
       width: 100%;
       justify-content: space-between;
     }
+
+    .edit-block{
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      .btn-sm{
+        height: 24px;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        justify-items: center;
+        text-align: center;
+        padding: 0px 8px;
+        &#edit-bulletin{
+          margin-left: 8px;
+        }
+      }
+    }
   }
 }

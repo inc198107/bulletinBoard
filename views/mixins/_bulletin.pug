@@ -13,7 +13,7 @@ mixin bulletin_card(authorMail, rating, text, id, image, name, findId)
         =`${authorMail}`
       p.card-text
         =`${text}`
-      a.card-link.link-with-rating(href = '#', data-find=`${findId}`, data-id=`${id}`, data-autor=`${autorMail}`)
+      a.card-link.link-with-rating(href = '#', data-find=`${findId}`, data-id=`${id}`, data-autor=`${authorMail}`)
         =`Read more...`
         .rating-container
           .top-rating
@@ -23,6 +23,10 @@ mixin bulletin_card(authorMail, rating, text, id, image, name, findId)
             while count < rate
               - count ++
               img.star(src="./images/star.svg", alt="star") 
+      if autorised && (user === authorMail)
+        .edit-block
+          button.btn-danger.btn-sm#delete-bulletin(type='button', data-find=`${findId}`)
+            ='Del'
+          button.btn-warning.btn-sm#edit-bulletin(type='button' data-find=`${findId}`)
+            ='Edit'
       
-    //- include ./mixins/_rating_inactive_vidget
-    //- +rating-star(rate)

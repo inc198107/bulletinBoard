@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require("body-parser");
 const multer = require('multer');
+const path = require('path');
 const fs = require('fs');
 const mongoose = require('mongoose');
 const router = express.Router();
@@ -60,6 +61,31 @@ const getAllItems = () => {
         console.log("get all", items);
     });
 }
+
+const deleteBulletin = (id) => {
+    Bulletin.findBulletinBySearch(id, (error) => {
+        if (error) console.log(error)
+    })
+        .then((res) => {
+            let file = path.basename(`${res[0].image}`);
+            fs.unlink(path.resolve('public/uploads', file), (error) => {
+                if (!error) {
+                    return Bulletin.deleteBulletin(id, (error,result) => {
+                        if (error) {
+                            console.log("deleted error", error);
+                        }
+                    })
+                }
+                else return false
+            });
+
+        })
+}
+
+router.delete('/delete', (req, res, next) => {
+    console.log('item to delete', req.query.id);
+   deleteBulletin(req.query.id)     
+});
 
 router.get('/details/vote', (req, res, next) => {
     console.log(req.query);

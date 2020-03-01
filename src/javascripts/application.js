@@ -4,6 +4,6 @@ import './libs/jquery.barrating.min';
 import './libs/jquery-scrolltofixed-min';
 import './header';
 import './leftBar';
-import './test';
 import './addBulletin';
 import './bulletin-details';
+import './deleteBulletin';
