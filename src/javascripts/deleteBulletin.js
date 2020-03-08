@@ -12,8 +12,8 @@ const deleteBulletinAction = function (itemId,elem) {
         method: "DELETE",
         url: `/delete?id=${itemId}`,
     })
-    .done((data, textStatus) => {
-         console.log(elem.parent().parent().parent())
+    .done((textStatus) => {
+         elem.parent().parent().parent().remove()
          console.log(textStatus)
     })
     .fail((error) => {

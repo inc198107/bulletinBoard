@@ -62,30 +62,25 @@ const getAllItems = () => {
     });
 }
 
-const deleteBulletin = (id) => {
-    Bulletin.findBulletinBySearch(id, (error) => {
-        if (error) console.log(error)
+const deleteOneBulletin = (id, res) => {
+    return Bulletin.deleteBulletin(id, (error, result) => {
+        if (error) {
+            console.log("deleted error", error);
+            res.status(204).json({ ID: req.query.id })
+            res.end
+        }
+        else {
+            let file = path.basename(`${result.image}`);
+            fs.unlinkSync(path.resolve('public/uploads', file));
+            res.sendStatus(200)
+            res.end
+        }
     })
-        .then((res) => {
-            let file = path.basename(`${res[0].image}`);
-            fs.unlink(path.resolve('public/uploads', file), (error) => {
-                if (!error) {
-                    return Bulletin.deleteBulletin(id, (error,result) => {
-                        if (error) {
-                            console.log("deleted error", error);
-                        }
-                    })
-                }
-                else return false
-            });
-
-        })
 }
 
 router.delete('/delete', (req, res, next) => {
-    console.log('item to delete', req.query.id);
-   deleteBulletin(req.query.id)     
-});
+    deleteOneBulletin(req.query.id, res)
+})
 
 router.get('/details/vote', (req, res, next) => {
     console.log(req.query);
