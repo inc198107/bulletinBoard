@@ -7,3 +7,4 @@ import './leftBar';
 import './addBulletin';
 import './bulletin-details';
 import './deleteBulletin';
+import './editBulletin'

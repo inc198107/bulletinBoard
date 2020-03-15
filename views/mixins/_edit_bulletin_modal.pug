@@ -1,0 +1,61 @@
+mixin edit_bulletin()
+  .modal.fade#modal__edit-bulletin(tabindex='-1', role='dialog', aria-labeledby='modal__edit-bulletin', aria-hidden='true')
+    .modal-dialog.modal-dialog-centered.modal-lg(role='document')
+      .modal-content
+        .modal-header
+          .modal-title#modal__edit-bulletin
+            ='Edit your bulletin and save'
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true')
+              |&times;
+        .modal-body
+          .media
+            img.align-self-start.mr-3.preview#preview-edit(src="./images/default.gif", alt='image')
+            .media-body
+              form#edit-bulletin
+                input#search-for-edit(type='hidden',name='searchId', value='')
+                .form-group
+                  label(for='edit_bulletin_name')
+                    ='Name*'
+                  input.form-control#edit_bulletin_name(
+                      type='text',
+                      required='required'
+                      name='edit_bulletin_name',
+                      placeholder='Enter Bulletin name',
+                      aria-describedby = 'enter_edit_bull_name'
+                    )
+                  small#enter_edit_bull_name.form-text.text-muted
+                    ='Edit your bulletin name'
+                .form-group#image-upload-edit
+                  .custom-file
+                    input.custom-file-input#edit-bulletin-image(type='file', name='edit_bulletin_image')
+                    label.custom-file-label(for='edit-bulletin-image')
+                      ='Choose image for your bulletin( jpg, jpg or png)'
+                    .invalid-feedback
+                .form-group
+                  label(for='edit-bulletin_describe')
+                    ='Yor bulletin short description*'
+                  textarea.form-control#edit-bulletin_describe(
+                      name='edit_bulletin_describe',
+                      required = 'required',
+                      maxlength = '100',
+                      aria-describedby = 'enter-edit-bull-description'
+                    )
+                  small#enter-edit-bull-description.form-text.text-muted
+                    ='Enter your bulletin short description, maximum 100 characters'
+                .form-group
+                  label(for='edit-bulletin_text')
+                    ='Yor bulletin text*'
+                  textarea.form-control#edit-bulletin_text(
+                      name='edit_bulletin_text',
+                      required = 'required',
+                      maxlength = '400',
+                      aria-describedby = 'enter-edit-bull-text'
+                    )
+                  small#enter-edit-bull-text.form-text.text-muted
+                    ='Enter your bulletin text, maximum 400 characters'
+        .modal-footer
+          button.btn.btn-secondary(type='button', data-dismiss='modal')
+            ='Cancel'
+          button.btn.btn-primary#submit-bulletin(type='button')
+            ='Save'

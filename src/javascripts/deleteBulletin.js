@@ -18,5 +18,6 @@ const deleteBulletinAction = function (itemId,elem) {
     })
     .fail((error) => {
         console.log(error)
+        allert("Something went wrong")
     })
 }

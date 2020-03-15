@@ -27,7 +27,6 @@ const activeRatingInit = function (init, findId) {
         onSelect: function (value, text, event) {
             if (typeof (event) !== 'undefined') {
                 let votedRate = $(event.target).data("rating-value");
-                console.log('votedRate', votedRate);
                 vote(votedRate, findId);
             } else {
                 return
@@ -42,7 +41,6 @@ const getDetails = (searchId) => {
         url: `/details?id=${searchId}`
     })
         .done((res) => {
-            console.log(res);
             const detailedData = JSON.parse(res);
             let respData = detailedData[0];
             $('.modal-content .media .media-body .mt-0').text(`${respData.name}`);
@@ -60,7 +58,6 @@ const getDetails = (searchId) => {
             else {
                 let currentUserMail = $('#log-out-btn').data("user-mail");
                 if (currentUserMail === respData.authorMail) {
-                    console.log(currentUserMail, respData.authorMail);
                     $("#modal__bulletin-detail #bulletin-rating").barrating('readonly', true);
                 }
                 else {

@@ -17,7 +17,9 @@ html
         +sign-in_modal()
       if autorised
         include ./mixins/_add_bulletin_modal
+        include ./mixins/_edit_bulletin_modal
         +create_bulletin(categories)
+        +edit_bulletin()
       include header.pug
       main.main-content
         block content

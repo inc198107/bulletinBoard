@@ -147,18 +147,18 @@
         .card.bulletin-card .edit-block .btn-sm#edit-bulletin {
           margin-left: 8px; }
 
-#modal__create-bulletin .modal-header {
+#modal__create-bulletin .modal-header, #modal__edit-bulletin .modal-header {
   font-size: 20px;
   font-family: 'Seymour One', Arial, Helvetica, sans-serif;
   color: #007bff; }
 
-#modal__create-bulletin .modal-body {
+#modal__create-bulletin .modal-body, #modal__edit-bulletin .modal-body {
   font-family: "Oswald", Arial, Helvetica, sans-serif; }
-  #modal__create-bulletin .modal-body .media .preview {
+  #modal__create-bulletin .modal-body .media .preview, #modal__edit-bulletin .modal-body .media .preview {
     max-width: 200px;
     height: auto; }
 
-#modal__create-bulletin .modal-footer .btn {
+#modal__create-bulletin .modal-footer .btn, #modal__edit-bulletin .modal-footer .btn {
   font-family: "Anton", Arial, Helvetica, sans-serif;
   font-size: 14px; }
 

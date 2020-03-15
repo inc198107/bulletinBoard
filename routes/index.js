@@ -9,7 +9,7 @@ const urlEncodedParser = bodyParser.urlencoded({ extended: true });
 
 const cardDecorator = require('../decorators/cardDcorator');
 
-var storage = multer.diskStorage({
+let storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'public/uploads')
     },
@@ -21,7 +21,7 @@ var storage = multer.diskStorage({
     }
 })
 
-var upload = multer({ storage: storage })
+let upload = multer({ storage: storage })
 
 const User = require('../models/user');
 const Bulletin = require('../models/bulletin');
@@ -58,7 +58,6 @@ const getBulletinsBy = (category) => {
 const getAllItems = () => {
     return Bulletin.returnAll((error, items) => {
         if (error) { return console.log(error) };
-        console.log("get all", items);
     });
 }
 
@@ -67,19 +66,56 @@ const deleteOneBulletin = (id, res) => {
         if (error) {
             console.log("deleted error", error);
             res.status(204).json({ ID: req.query.id })
-            res.end
         }
         else {
             let file = path.basename(`${result.image}`);
             fs.unlinkSync(path.resolve('public/uploads', file));
             res.sendStatus(200)
-            res.end
         }
     })
 }
 
+router.patch('/edit-bulletin', upload.any(), (req, res, next) => {
+    const data = req.body;
+    const newFile = req.files[0];
+    Bulletin.findOne({ findId: data.searchId }, function (err) {
+        if (err) {
+            res.status(422).json({ "errorr": `${err}` });
+            res.end
+        }
+    }).then((result) => {
+        if (newFile === undefined) {
+            Bulletin.updateOne({ findId: data.searchId },
+                {
+                   preview: data.edit_bulletin_describe,
+                   name: data.edit_bulletin_name,
+                   text: data.edit_bulletin_text,
+                }).then((succ) => {
+                    res.status(200).send(`updated ${succ.nModified} file`);
+                    res.end
+                })
+        }
+        else {
+            let oldFile = path.basename(`${result.image}`);
+            fs.unlinkSync(path.resolve('public/uploads', oldFile));
+            let newFilename = `${newFile.filename}`;
+            Bulletin.updateOne({ findId: data.searchId },
+                {
+                   preview: data.edit_bulletin_describe,
+                   name: data.edit_bulletin_name,
+                   text: data.edit_bulletin_text,
+                   image: `./uploads/${newFilename}`,
+                }).then((succ) => {
+                    res.status(200).send(`updated ${succ.nModified } file`);
+                    res.end
+                })
+        }
+    })
+})
+
 router.delete('/delete', (req, res, next) => {
-    deleteOneBulletin(req.query.id, res)
+    deleteOneBulletin(req.query.id, res);
+    res.end
 })
 
 router.get('/details/vote', (req, res, next) => {
@@ -93,7 +129,7 @@ router.get('/details/vote', (req, res, next) => {
             let nextVote = item[0].votesCount + 1;
             let updatedRate = item[0].ratingCount + votedRate;
             Bulletin.updateRating(unitID, updatedRate, nextVote, (error, item) => {
-                if (error) { res.sendStatus(402); }
+                if (error) { res.sendStatus(422); }
                 let out = JSON.stringify([{ currRate: (updatedRate / nextVote) }]);
                 res.send(out)
             })
@@ -104,7 +140,7 @@ router.get('/details', (req, res, next) => {
     console.log(req.query.id);
     let currForDet = `${req.query.id}`
     Bulletin.findBulletinBySearch(currForDet, (err, details) => {
-        if (err) { res.sendStatus(402) };
+        if (err) { res.sendStatus(422) };
         if (details) {
             let out = JSON.stringify(details);
             res.send(out)
@@ -115,7 +151,6 @@ router.get('/details', (req, res, next) => {
 
 router.post('/new-bulletin', upload.any(), (req, res, next) => {
     if (!req.body) return res.sendStatus(400);
-    console.log("create");
     let id = `${Date.now()}`;
     let redId = id.substr(-6, id.length);
     createBulletin(
@@ -205,7 +240,6 @@ router.get('/for-kids', (req, res, next) => {
         user = sess.mail;
     }
     getBulletinsBy('For Kids').then((result) => {
-        console.log("this is it", result)
         if (result.length > 0) {
             const out = cardDecorator(result);
             res.render("main_page", {
@@ -232,7 +266,6 @@ router.get('/tools', (req, res, next) => {
         user = sess.mail;
     }
     getBulletinsBy('Tools').then((result) => {
-        console.log("this is it", result)
         if (result.length > 0) {
             const out = cardDecorator(result);
             res.render("main_page", {
@@ -259,7 +292,6 @@ router.get('/home', (req, res, next) => {
         user = sess.mail;
     }
     getBulletinsBy('Home').then((result) => {
-        console.log("this is it", result)
         if (result.length > 0) {
             const out = cardDecorator(result);
             res.render("main_page", {
