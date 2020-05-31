@@ -3,7 +3,6 @@ const path = require('path');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const sassMiddleware = require('node-sass-middleware');
-const bodyParser = require("body-parser");
 const cookieParser = require('cookie-parser');
 const uri = "mongodb+srv://iAm:qwedf1981@cluster0-kgvh0.mongodb.net/test?retryWrites=true&w=majority";
 const mongoose = require('mongoose');

@@ -214,7 +214,7 @@
     font-size: 14px;
     font-weight: lighter;
     color: #0f0f00;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; }
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif; }
   #modal__bulletin-detail .modal-body .media .media-body .ratings-block {
     display: flex;
     flex-direction: row;
@@ -223,16 +223,45 @@
     justify-content: space-around; }
     #modal__bulletin-detail .modal-body .media .media-body .ratings-block .rating-call {
       font-size: medium;
-      color: #702a15; }
+      color: #702a15;
+      margin-bottom: 0; }
     #modal__bulletin-detail .modal-body .media .media-body .ratings-block .rating-active-container {
       font-family: unset;
       display: flex;
       max-width: 150px;
       margin: 8px 0 8px auto; }
+    #modal__bulletin-detail .modal-body .media .media-body .ratings-block.hidden {
+      display: none;
+      user-select: none;
+      pointer-events: none; }
+  #modal__bulletin-detail .modal-body .media .media-body .collapse-review-block {
+    color: #00aaff;
+    font-size: small;
+    cursor: pointer; }
+    #modal__bulletin-detail .modal-body .media .media-body .collapse-review-block:hover {
+      color: #4278F5; }
+    #modal__bulletin-detail .modal-body .media .media-body .collapse-review-block.hidden {
+      display: none;
+      user-select: none;
+      pointer-events: none; }
+      #modal__bulletin-detail .modal-body .media .media-body .collapse-review-block.hidden button {
+        user-select: none;
+        pointer-events: none; }
+  #modal__bulletin-detail .modal-body .media .media-body .leave-review-block {
+    margin-top: 8px; }
+    #modal__bulletin-detail .modal-body .media .media-body .leave-review-block .leave-review-input {
+      font-size: 14px;
+      font-weight: lighter;
+      color: #0f0f00;
+      font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif; }
 
 #modal__bulletin-detail .modal-footer .btn {
   font-family: "Anton", Arial, Helvetica, sans-serif;
   font-size: 14px; }
+  #modal__bulletin-detail .modal-footer .btn.disabled {
+    cursor: auto;
+    opacity: 0.2;
+    user-select: none; }
 
 .br-theme-bootstrap-stars .br-widget {
   height: 28px;

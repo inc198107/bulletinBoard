@@ -7,6 +7,7 @@ const BulletinScheme = new Schema({
         required: true,
         unique: false
     },
+    comments: [{ body: String, date: String }],
     ratingCount: Number,
     votesCount: Number,
     category: String,
@@ -20,10 +21,10 @@ const BulletinScheme = new Schema({
     name: String,
     image: String,
 },
-{
-    autoCreate: true,
-    autoIndex: true
-})
+    {
+        autoCreate: true,
+        autoIndex: true
+    })
 
 BulletinScheme.statics.findBulletinByUser = function (email, cb) {
     return this.find({ authorMail: email }, cb)
@@ -41,11 +42,15 @@ BulletinScheme.statics.returnAll = function (cb) {
     return this.find({}, cb)
 }
 
-BulletinScheme.statics.updateRating = function(findId, rating, voted, cb){
-    this.findOneAndUpdate({ findId: findId }, {ratingCount: rating, votesCount: voted }, cb)
+BulletinScheme.statics.updateRating = function (findId, rating, voted, cb) {
+    this.findOneAndUpdate({ findId: findId }, { ratingCount: rating, votesCount: voted }, cb)
 }
 
-BulletinScheme.statics.deleteBulletin = function(findId, cb){
+BulletinScheme.statics.addReview = function (findId, text, timeMark, cb) {
+    this.findOneAndUpdate({ findId: findId }, { comments: { body: text, data: timeMark } }, cb)
+}
+
+BulletinScheme.statics.deleteBulletin = function (findId, cb) {
     return this.findOneAndDelete({ findId: findId }, cb)
 }
 

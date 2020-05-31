@@ -1,13 +1,32 @@
 $(document).ready(() => {
+    let currAutorName = "";
+    let findId = ""
     $(".bulletin-card").on("click", ".link-with-rating", function (e) {
         e.preventDefault();
-        const findId = $(this).data('find');
-        const currAutorName = $(this).data("autor");
+        findId = $(this).data('find');
+        currAutorName = $(this).data("autor");
         const currBulletinId = $(this).data("id");
         headerIdAdd(currBulletinId);
         getDetails(findId)
         OpenDetailModal();
     });
+
+    $("#modal__bulletin-detail").on("show.bs.modal", function (e) {
+        let currentUserMail = $("#log-out-btn").data("user-mail");
+        const $leaveRevBlock = $("#modal__bulletin-detail span.collapse-review-block");
+        const $ratingBlock = $("#modal__bulletin-detail .ratings-block");
+        if (currAutorName === currentUserMail) {
+            $leaveRevBlock.removeClass('hidden');
+            $ratingBlock.removeClass('hidden');
+        }
+    }).on("click", "span.collapse-review-block", function (e) {
+        $("form.leave-review-block").collapse('toggle');
+    }).on("click", ".bulletin__leave-review-btn", function (e) {
+       const reviewText = $("form.leave-review-block .leave-review-input").val();
+       console.log(reviewText);
+       leaveReviewAction(reviewText, findId);
+    })
+
 });
 
 const OpenDetailModal = function () {
@@ -51,12 +70,12 @@ const getDetails = (searchId) => {
             if (respData.votesCount > 0) {
                 rating = respData.ratingCount / respData.votesCount
             }
-            activeRatingInit(rating,searchId);
+            activeRatingInit(rating, searchId);
             if ($('#log-out-btn').length === 0) {
                 $("#modal__bulletin-detail #bulletin-rating").barrating('readonly', true);
             }
             else {
-                let currentUserMail = $('#log-out-btn').data("user-mail");
+                let currentUserMail = $("#log-out-btn").data("user-mail");
                 if (currentUserMail === respData.authorMail) {
                     $("#modal__bulletin-detail #bulletin-rating").barrating('readonly', true);
                 }
@@ -77,5 +96,25 @@ const vote = (rate, searchId) => {
             let updatedRate = rateData[0].currRate;
             $("#modal__bulletin-detail #bulletin-rating").barrating('readonly', true);
             $("#modal__bulletin-detail #bulletin-rating").barrating('set', updatedRate || 1);
+        })
+}
+
+const leaveReviewAction = (text, searchId) => {
+    $.ajax({
+        method: "PATCH",
+        url: `/details/review/${searchId}`,
+        contentType: 'application/json',
+        async: true,
+        processData: false,
+        cache: false,
+        data: JSON.stringify({review: text}),
+    })
+        .done((res) => {
+            const data = JSON.parse(res);
+            console.log(data)
+        })
+        .fail((err) => {
+            //window.location.reload(true);
+            console.log(err.status)
         })
 }

@@ -18,7 +18,7 @@ mixin bulletin_details()
                 ='Created by'
               .bulletin-text-content
                 =' '
-              .ratings-block
+              .ratings-block.hidden
                 p.rating-call
                   = 'Rate this Bulletin (1 to 5 stars):'
                 .rating-active-container
@@ -28,6 +28,20 @@ mixin bulletin_details()
                     option(value = '3') 3
                     option(value = '4') 4
                     option(value = '5') 5
+              span.collapse-review-block.hidden
+                ='Leave Review'
+              form#review-form.leave-review-block.collapse
+                .form-group
+                  textarea.form-control.leave-review-input(
+                      name='review',
+                      maxlength = '300',
+                      aria-describedby = 'enter-review'
+                      placeholder='Leave your review'
+                    )
+                  small.form-text.text-muted
+                    ='Maximum 300 characters'
+                button.btn.btn-primary.bulletin__leave-review-btn(type='button')
+                  ='Submit'
         .modal-footer
           button.btn.btn-secondary(type='button', data-dismiss='modal')
             ='Close'

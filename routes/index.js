@@ -3,9 +3,9 @@ const bodyParser = require("body-parser");
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const mongoose = require('mongoose');
 const router = express.Router();
 const urlEncodedParser = bodyParser.urlencoded({ extended: true });
+const jsonParser = bodyParser.json({type:'application/json'});
 
 const cardDecorator = require('../decorators/cardDcorator');
 
@@ -118,6 +118,11 @@ router.delete('/delete', (req, res, next) => {
     res.end
 })
 
+router.patch('/details/review/:id', jsonParser,  (req, res, next) => {
+    console.log('review',req.params.id, req.body );
+    res.status(200).send(JSON.stringify({params:req.params.id, text: req.body }));
+})
+
 router.get('/details/vote', (req, res, next) => {
     console.log(req.query);
     let unitID = `${req.query.id}`;
@@ -135,6 +140,7 @@ router.get('/details/vote', (req, res, next) => {
             })
         })
 })
+
 
 router.get('/details', (req, res, next) => {
     console.log(req.query.id);

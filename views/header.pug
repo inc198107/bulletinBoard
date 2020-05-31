@@ -16,7 +16,7 @@
         ='Add Bulletin'
   .header__right-part
     if autorised
-      a.nav-link.header__right-part-user-link(href='#')
+      a.nav-link.header__right-part-user-link(href='#', data-current-user=`${user}`)
         =`${user}`
       button.btn.btn-sm.btn-danger#log-out-btn(type='button', data-user-mail=`${user}`)
         ='Log Out'
