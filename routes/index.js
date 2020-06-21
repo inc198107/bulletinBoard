@@ -5,7 +5,7 @@ const path = require('path');
 const fs = require('fs');
 const router = express.Router();
 const urlEncodedParser = bodyParser.urlencoded({ extended: true });
-const jsonParser = bodyParser.json({type:'application/json'});
+const jsonParser = bodyParser.json({ type: 'application/json' });
 
 const cardDecorator = require('../decorators/cardDcorator');
 
@@ -87,9 +87,9 @@ router.patch('/edit-bulletin', upload.any(), (req, res, next) => {
         if (newFile === undefined) {
             Bulletin.updateOne({ findId: data.searchId },
                 {
-                   preview: data.edit_bulletin_describe,
-                   name: data.edit_bulletin_name,
-                   text: data.edit_bulletin_text,
+                    preview: data.edit_bulletin_describe,
+                    name: data.edit_bulletin_name,
+                    text: data.edit_bulletin_text,
                 }).then((succ) => {
                     res.status(200).send(`updated ${succ.nModified} file`);
                     res.end
@@ -101,12 +101,12 @@ router.patch('/edit-bulletin', upload.any(), (req, res, next) => {
             let newFilename = `${newFile.filename}`;
             Bulletin.updateOne({ findId: data.searchId },
                 {
-                   preview: data.edit_bulletin_describe,
-                   name: data.edit_bulletin_name,
-                   text: data.edit_bulletin_text,
-                   image: `./uploads/${newFilename}`,
+                    preview: data.edit_bulletin_describe,
+                    name: data.edit_bulletin_name,
+                    text: data.edit_bulletin_text,
+                    image: `./uploads/${newFilename}`,
                 }).then((succ) => {
-                    res.status(200).send(`updated ${succ.nModified } file`);
+                    res.status(200).send(`updated ${succ.nModified} file`);
                     res.end
                 })
         }
@@ -118,9 +118,21 @@ router.delete('/delete', (req, res, next) => {
     res.end
 })
 
-router.patch('/details/review/:id', jsonParser,  (req, res, next) => {
-    console.log('review',req.params.id, req.body );
-    res.status(200).send(JSON.stringify({params:req.params.id, text: req.body }));
+router.patch('/details/review/:id', jsonParser, (req, res, next) => {
+    console.log('review', req.params.id, req.body);
+    const dat = new Date();
+    Bulletin.findOne({ findId: req.params.id }, function (err) {
+        if (err) {
+            res.status(422).json({ "errorr": `${err}` });
+            res.end
+        }
+    }).then((result) => {
+        Bulletin.updateOne({ findId: req.params.id },
+            { comments: [...result.comments, { body: req.body.review, date: `${dat}` }] }
+        ).then((succes) => {
+            res.status(200).send({});
+        })
+    })
 })
 
 router.get('/details/vote', (req, res, next) => {

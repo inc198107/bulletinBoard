@@ -1,4 +1,4 @@
-mixin bulletin_details()
+mixin bulletin_details(authorMail)
   .modal.fade#modal__bulletin-detail(tabindex='-1', role='dialog', aria-labeledby='modal__create-bulletin', aria-hidden='true')
     .modal-dialog.modal-dialog-centered.modal-lg(role='document')
       .modal-content
@@ -18,7 +18,7 @@ mixin bulletin_details()
                 ='Created by'
               .bulletin-text-content
                 =' '
-              .ratings-block.hidden
+              .ratings-block
                 p.rating-call
                   = 'Rate this Bulletin (1 to 5 stars):'
                 .rating-active-container
@@ -28,8 +28,8 @@ mixin bulletin_details()
                     option(value = '3') 3
                     option(value = '4') 4
                     option(value = '5') 5
-              span.collapse-review-block.hidden
-                ='Leave Review'
+                span.collapse-review-block.hidden
+                  ='Leave Review'
               form#review-form.leave-review-block.collapse
                 .form-group
                   textarea.form-control.leave-review-input(
@@ -42,6 +42,7 @@ mixin bulletin_details()
                     ='Maximum 300 characters'
                 button.btn.btn-primary.bulletin__leave-review-btn(type='button')
                   ='Submit'
+              #reviews-block
         .modal-footer
           button.btn.btn-secondary(type='button', data-dismiss='modal')
             ='Close'
